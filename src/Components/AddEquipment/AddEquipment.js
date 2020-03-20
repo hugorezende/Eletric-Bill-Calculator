@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ButtonStyled from "../../Styled/Button";
+
 export default function AddEquipment() {
+  const [hours, setHours] = useState(0);
+  function validadeHours(event) {
+    if (event.target.value > 24) {
+      return;
+    } else {
+      setHours(event.target.value);
+    }
+  }
   return (
     <div style={{ textAlign: "center" }}>
       <div
@@ -15,7 +24,15 @@ export default function AddEquipment() {
         Horas ligado por dia
       </div>
       <div>
-      <input style={style} placeholder="1" type="number" min="0" max="24"></input>
+        <input
+          style={style}
+          placeholder="1"
+          type="number"
+          min="0"
+          max="24"
+          value={hours}
+          onChange={validadeHours}
+        ></input>
       </div>
 
       <div
@@ -29,8 +46,14 @@ export default function AddEquipment() {
         Numero de equipamentos
       </div>
       <div>
-        <input style={style} placeholder="1" type="number" min="0" max="24"></input>
-        </div>
+        <input
+          style={style}
+          placeholder="1"
+          type="number"
+          min="0"
+          max="24"
+        ></input>
+      </div>
       <ButtonStyled>Adicionar</ButtonStyled>
     </div>
   );
@@ -45,7 +68,7 @@ const style = {
   padding: "20px",
   textAlign: "center",
   borderRadius: "20px",
-  fontSize: "36px",
+  fontSize: "36px"
 };
 
 const Input = styled.input`

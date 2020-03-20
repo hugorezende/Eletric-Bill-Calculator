@@ -6,11 +6,10 @@ import Modal from "react-modal";
 import AddEquipment from "../AddEquipment/AddEquipment";
 
 export default function ListEquipments(props) {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = React.useState(true);
 
   const equips = useSelector(state => state.equipments);
   const dispatch = useDispatch();
-
   function closeModal() {
     setIsOpen(false);
   }
