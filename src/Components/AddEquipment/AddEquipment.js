@@ -1,14 +1,24 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import ButtonStyled from "../../Styled/Button";
 
-export default function AddEquipment() {
-  const [hours, setHours] = useState(0);
+export default function AddEquipment(prop) {
+  const [equipmentsData, setEquipmentsData] = useState({hours:0,number:0});
+
+  const dispatch = useDispatch();
+
+  function addEquip() {
+    console.log("dadsa");
+    dispatch({ type: "ADD_EQUIPMENT", name:"test", potencia:100, horasDia:equipmentsData.hours });
+    prop.closeModal()
+  }
+
   function validadeHours(event) {
     if (event.target.value > 24) {
       return;
     } else {
-      setHours(event.target.value);
+      setEquipmentsData({hours:event.target.value});
     }
   }
   return (
@@ -30,7 +40,7 @@ export default function AddEquipment() {
           type="number"
           min="0"
           max="24"
-          value={hours}
+          value={equipmentsData.hours}
           onChange={validadeHours}
         ></input>
       </div>
@@ -52,9 +62,10 @@ export default function AddEquipment() {
           type="number"
           min="0"
           max="24"
+          value={equipmentsData.number }
         ></input>
       </div>
-      <ButtonStyled>Adicionar</ButtonStyled>
+      <ButtonStyled onClick={()=> addEquip()}>Adicionar</ButtonStyled>
     </div>
   );
 }

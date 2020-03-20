@@ -6,7 +6,7 @@ const equipments = (state = [{name:"Geladeira",potencia:300,horasDia:5},{name:"F
         return [
           ...state,
           {
-            name: action.text,
+            name: action.name,
             potencia: action.potencia,
             horasDia: action.horasDia
           }

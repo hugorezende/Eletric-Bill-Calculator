@@ -31,7 +31,7 @@ export default function ListEquipments(props) {
         style={modalStyle}
         onRequestClose={closeModal}
       >
-        <AddEquipment/>
+        <AddEquipment closeModal={closeModal}/>
       </Modal>
     </>
   );
