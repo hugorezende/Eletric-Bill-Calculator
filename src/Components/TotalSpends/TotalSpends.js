@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import pigsvg from "../../Assets/imgs/pig_icon.svg";
+import { useSelector } from "react-redux";
 
 export default function TotalSpends(props) {
+  const equips = useSelector(state=> state.equipments)
+
   function CalculateBill() {
     let kwhPrice = 0.35;
     let billValue = 0;
-    props.equipments.map(item => {
+    equips.map(item => {
       billValue += item.horasDia * item.potencia * kwhPrice/60;
     });
     return billValue;
