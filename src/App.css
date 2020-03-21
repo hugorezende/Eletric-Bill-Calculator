@@ -8,4 +8,9 @@
 body{
     font-family: 'DM Sans', sans-serif;
     background-color: #282828;
+    color:#fff;
+}
+
+h3{
+    padding: 10px 0;
 }

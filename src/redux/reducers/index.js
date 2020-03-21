@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 
-const equipments = (state = [{name:"Geladeira",potencia:300,horasDia:5},{name:"Fogao",potencia:300,horasDia:5}], action) => {
+const equipments = (state = [], action) => {
     switch (action.type) {
       case 'ADD_EQUIPMENT':
         return [

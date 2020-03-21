@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ButtonStyled from "../../Styled/Button";
 import Modal from "react-modal";
 import AddEquipment from "../AddEquipment/AddEquipment";
 
 export default function ListEquipments(props) {
-  const [modalIsOpen, setIsOpen] = React.useState(true);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const equips = useSelector(state => state.equipments);
   const dispatch = useDispatch();
@@ -17,33 +18,47 @@ export default function ListEquipments(props) {
   return (
     <>
       <BoxEquipments>
-        {equips.map((item, index) => (
-          <ListItem key={index}>
-            <div>{item.name}</div>
-            <div>{item.horasDia} horas por dia</div>
-          </ListItem>
-        ))}
+        {equips.length == 0 ? (
+          <NoItem>Adicione um equipamento</NoItem>
+        ) : (
+          equips.map((item, index) => (
+            <ListItem key={index}>
+              <div>{item.name}</div>
+              <div>{item.horasDia} horas por dia</div>
+            </ListItem>
+          ))
+        )}
       </BoxEquipments>
       <ButtonStyled onClick={() => setIsOpen(true)}>Adicionar</ButtonStyled>
+      
+      <Link to="/add">
+        <ButtonStyled>Outra pagina</ButtonStyled>
+      </Link>
+
       <Modal
         isOpen={modalIsOpen}
         contentLabel="Minimal Modal Example"
         style={modalStyle}
         onRequestClose={closeModal}
       >
-        <AddEquipment closeModal={closeModal}/>
+        <AddEquipment closeModal={closeModal} />
       </Modal>
     </>
   );
 }
 
+const NoItem = styled.div`
+  margin: 30px 0;
+  font-size: 18px;
+  text-align: center;
+`;
 const modalStyle = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)"
   },
   content: {
-    border:"none",
-    borderRadius:"20px",
+    border: "none",
+    borderRadius: "20px",
     background: "linear-gradient(180deg, #4A4A4A 0%, #2B2B2B 100%)",
     maxWidth: "500px",
     width: "90vw",
