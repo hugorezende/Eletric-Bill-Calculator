@@ -6,15 +6,16 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
 import styled from "styled-components";
-import TotalSpends from "./Components/TotalSpends/TotalSpends";
-import ListEquipments from "./Components/ListEquipments/ListEquipments";
-import Summary from "./Components/Summary/Summary";
+import Firebase from 'firebase'
+import config from './config'
+
 import AddEquipmentTypePage from "./Pages/AddEquipmentTypePage";
 import Index from "./Pages/Index";
 import Header from "./Components/Header/Header";
 import AddEquipmentPage from "./Pages/AddEquipmentPage";
 
 function App() {
+  Firebase.initializeApp(config)
   const store = createStore(
     rootReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

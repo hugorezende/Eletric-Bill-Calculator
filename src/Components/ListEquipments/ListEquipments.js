@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Firebase from "firebase";
+import config from "../../config";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -7,7 +9,14 @@ import Modal from "react-modal";
 import AddEquipment from "../AddEquipment/AddEquipment";
 
 export default function ListEquipments(props) {
+  useEffect(() => {
+    getData_device();
+  }, []);
+
+  var databaseRef = Firebase.database().ref("/devices");
+
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [data, setData] = useState({});
 
   const equips = useSelector(state => state.equipments);
   const dispatch = useDispatch();
@@ -15,22 +24,36 @@ export default function ListEquipments(props) {
     setIsOpen(false);
   }
 
+  function getData_device() {
+    databaseRef.on("value", snapshot => {
+      setData(snapshot.val());
+      //Object.entries(snapshot.val()).map((item)=>console.log(item[0]))
+    });
+  }
+
+  function addItem() {
+    Firebase.database()
+      .ref("/devices")
+      .push({ type: "cozinha", name: "Geladeira", potencia: "300w" });
+    console.log("DATA SAVED");
+  }
+
   return (
     <>
       <BoxEquipments>
-        {equips.length == 0 ? (
+        {data.length == 0 ? (
           <NoItem>Adicione um equipamento</NoItem>
         ) : (
-          equips.map((item, index) => (
-            <ListItem key={index}>
-              <div>{item.name}</div>
-              <div>{item.horasDia} horas por dia</div>
+          Object.entries(data).map(index => (
+            <ListItem key={index[0]}>
+              <div>{index[1].equipamento}</div>
+              <div>{index[1].horasDia} horas por dia</div>
             </ListItem>
           ))
         )}
       </BoxEquipments>
-      <ButtonStyled onClick={() => setIsOpen(true)}>Adicionar</ButtonStyled>
-      
+      <ButtonStyled onClick={() => addItem()}>Adicionar</ButtonStyled>
+
       <Link to="/add">
         <ButtonStyled>Outra pagina</ButtonStyled>
       </Link>
